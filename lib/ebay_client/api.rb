@@ -9,6 +9,8 @@ class EbayClient::Api < ActiveSupport::BasicObject
     @namespace = :urn
     @header = ::EbayClient::Header.new configuration, namespace
     @client = ::Savon::Client.new configuration.wsdl_file
+
+    create_methods if configuration.preload?
   end
 
   def dispatch name, body
@@ -28,6 +30,20 @@ class EbayClient::Api < ActiveSupport::BasicObject
   alias_method :to_s, :inspect
 
   protected
+  def create_methods
+    api_methods = ::Module.new
+
+    client.wsdl.soap_actions.each do |action|
+      name = action.to_s.gsub(/e_bay_/, '_ebay_')
+
+      api_methods.send :define_method, name do |*args|
+        dispatch name, args.first
+      end
+    end
+
+    api_methods.send :extend_object, self
+  end
+
   def camelize name
     name = name.to_s.camelcase
 
