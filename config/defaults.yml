@@ -1,0 +1,18 @@
+---
+defaults: &defaults
+  version: 767
+  routing: default
+  siteid: 0
+  preload: false
+
+development: &development
+  <<: *defaults
+  url: 'https://api.sandbox.ebay.com/wsapi'
+
+test:
+  <<: *development
+
+production:
+  <<: *defaults
+  url: 'https://api.ebay.com/wsapi'
+  preload: true
