@@ -1,5 +1,5 @@
 module EbayClient
-  class_attribute :api
+  mattr_accessor :api
 
   class Engine < ::Rails::Engine
     CONFIG_FILE_PATH = %w(config ebay_client.yml)

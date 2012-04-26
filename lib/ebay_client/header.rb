@@ -7,7 +7,7 @@ class EbayClient::Header
   end
 
   def to_hash
-    @to_hash ||= {
+    {
       ns_key(:RequesterCredentials) => {
         ns_key(:eBayAuthToken) => configuration.token,
         ns_key(:Credentials) => {

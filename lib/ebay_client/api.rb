@@ -22,6 +22,11 @@ class EbayClient::Api < ActiveSupport::BasicObject
     response.body.values.first
   end
 
+  def inspect
+    "<EbayClient::Api>"
+  end
+  alias_method :to_s, :inspect
+
   protected
   def camelize name
     name = name.to_s.camelcase
