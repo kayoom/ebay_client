@@ -9,6 +9,7 @@ class EbayClient::Api < ActiveSupport::BasicObject
     @namespace = :urn
     @header = ::EbayClient::Header.new configuration, namespace
     @client = ::Savon::Client.new configuration.wsdl_file
+    @client.http.read_timeout = 600
 
     create_methods if configuration.preload?
   end
