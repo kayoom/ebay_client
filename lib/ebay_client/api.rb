@@ -11,6 +11,7 @@ class EbayClient::Api < ActiveSupport::BasicObject
     @client = ::Savon::Client.new configuration.wsdl_file
     @client.http.read_timeout = 600
 
+    Gyoku.convert_symbols_to :camelcase
     create_methods if configuration.preload?
   end
 
