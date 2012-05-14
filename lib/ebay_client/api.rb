@@ -1,4 +1,5 @@
 require 'savon'
+require 'gyoku'
 
 class EbayClient::Api < ActiveSupport::BasicObject
   attr_reader :configuration, :endpoint, :namespace, :header, :client
