@@ -5,6 +5,9 @@ class EbayClient::Api < ActiveSupport::BasicObject
   attr_reader :configuration, :endpoint, :namespace, :header, :client
 
   def initialize configuration
+    Savon.configure do |config|
+      config.log_level = :error
+    end
     @configuration = configuration
     @endpoint = ::EbayClient::Endpoint.new configuration
     @namespace = :urn
