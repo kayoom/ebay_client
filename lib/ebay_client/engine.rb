@@ -9,6 +9,11 @@ module EbayClient
       configuration = configurations[Rails.env]
 
       EbayClient.api = EbayClient::Api.new configuration
+
+      ::Savon.configure do |config|
+        config.logger = Rails.logger
+        config.log_level = :error
+      end
     end
   end
 end
