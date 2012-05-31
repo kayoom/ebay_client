@@ -4,10 +4,13 @@ defaults: &defaults
   routing: default
   siteid: 0
   preload: false
+  warning_level: Low
+  error_language: en_US
 
 development: &development
   <<: *defaults
   url: 'https://api.sandbox.ebay.com/wsapi'
+  warning_level: High
 
 test:
   <<: *development

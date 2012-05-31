@@ -1,5 +1,5 @@
 class EbayClient::Configuration
-  attr_accessor :version, :siteid, :routing, :url, :appid, :devid, :certid, :token
+  attr_accessor :version, :siteid, :routing, :url, :appid, :devid, :certid, :token, :warning_level, :error_language
 
   def initialize presets
     presets.each do |key, val|

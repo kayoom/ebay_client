@@ -2,7 +2,7 @@ require 'savon'
 require 'gyoku'
 
 class EbayClient::Api < ActiveSupport::BasicObject
-  attr_reader :configuration, :endpoint, :namespace, :header, :client
+  attr_reader :configuration, :endpoint, :namespace, :header, :client, :calls
 
   def initialize configuration
     @configuration = configuration
@@ -11,20 +11,17 @@ class EbayClient::Api < ActiveSupport::BasicObject
     @header = ::EbayClient::Header.new configuration, namespace
     @client = ::Savon::Client.new configuration.wsdl_file
     @client.http.read_timeout = 600
+    @calls = 0
 
     ::Gyoku.convert_symbols_to :camelcase
     create_methods if configuration.preload?
   end
 
   def dispatch name, body
-    name = camelize name
-    response = client.request namespace, name do |soap|
-      soap.endpoint = endpoint.url_for name
-      soap.header = header.to_hash
-      soap.body = normalize body
-    end
+    request = ::EbayClient::Request.new self, name, body
 
-    response.body.values.first
+    @calls += 1
+    request.execute
   end
 
   def inspect
@@ -45,17 +42,6 @@ class EbayClient::Api < ActiveSupport::BasicObject
     end
 
     api_methods.send :extend_object, self
-  end
-
-  def camelize name
-    name = name.to_s.camelcase
-
-    name.gsub /ebay/i, 'eBay'
-  end
-
-  def normalize body
-    body ||= {}
-    body.to_hash.merge :Version => configuration.version
   end
 
   def method_missing name, *args, &block
