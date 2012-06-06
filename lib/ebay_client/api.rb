@@ -24,6 +24,10 @@ class EbayClient::Api < ActiveSupport::BasicObject
     request.execute
   end
 
+  def dispatch! name, body
+    dispatch(name, body).payload!
+  end
+
   def inspect
     "<EbayClient::Api>"
   end
@@ -39,12 +43,20 @@ class EbayClient::Api < ActiveSupport::BasicObject
       api_methods.send :define_method, name do |*args|
         dispatch name, args.first
       end
+
+      api_methods.send :define_method, name + '!' do |*args|
+        dispatch! name, args.first
+      end
     end
 
     api_methods.send :extend_object, self
   end
 
   def method_missing name, *args, &block
-    dispatch name, args.first
+    if name.to_s[-1,1] == '!'
+      dispatch! name, args.first
+    else
+      dispatch name, args.first
+    end
   end
 end

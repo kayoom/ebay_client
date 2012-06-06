@@ -50,7 +50,15 @@ class EbayClient::Response
     ack == 'Warning'
   end
 
+  def payload!
+    !failure? && payload || raise_failure
+  end
+
   protected
+  def raise_failure
+    raise errors.map(&:short_message).join(', ')
+  end
+
   def get_errors values
     values = [values] if values.is_a? Hash
 
