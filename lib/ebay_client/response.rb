@@ -1,4 +1,15 @@
 class EbayClient::Response
+  class Exception < ::Exception
+    cattr_accessor :code
+    attr_accessor :error
+
+    def to_s
+      error.to_s
+    end
+    alias_method :inspect, :to_s
+    alias_method :message, :to_s
+  end
+
   class Error
     attr_reader :classification, :code, :parameters, :long_message, :short_message, :severity_code
 
@@ -9,6 +20,14 @@ class EbayClient::Response
       @long_message = values[:long_message]
       @short_message = values[:short_message]
       @severity_code = values[:severity_code]
+    end
+
+    def to_s
+      <<-END
+        #{short_message} - #{code}
+
+        #{long_message}
+      END
     end
 
     protected
@@ -22,6 +41,22 @@ class EbayClient::Response
 
           hash[key] = val
         end
+      end
+    end
+
+    class << self
+      attr_accessor :errors
+
+      def for_code code
+        code = code.to_s
+
+        self.errors ||= Hash.new do |h, k|
+          h[k] = Class.new(EbayClient::Response::Exception).tap do |exception|
+            exception.code = k
+          end
+        end
+
+        errors[code]
       end
     end
   end
@@ -55,8 +90,12 @@ class EbayClient::Response
   end
 
   protected
+  def exception
+    @exception ||= errors.first && EbayClient::Response::Error.for_code(errors.first.code).new.tap { |e| e.error = errors.first }
+  end
+
   def raise_failure
-    raise errors.map(&:short_message).join(', ')
+    raise exception
   end
 
   def get_errors values
