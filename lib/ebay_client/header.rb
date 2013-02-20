@@ -13,7 +13,7 @@ class EbayClient::Header
         ns_key(:Credentials) => {
           ns_key(:AppId) => configuration.appid,
           ns_key(:DevId) => configuration.devid,
-          ns_key(:CertId) => configuration.certid
+          ns_key(:AuthCert) => configuration.certid
         }
       }
     }
