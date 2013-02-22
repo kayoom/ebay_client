@@ -6,13 +6,13 @@ defaults: &defaults
   preload: false
   warning_level: Low
   error_language: en_US
-  savon_log_level: error
+  savon_log_level: debug
 
 development: &development
   <<: *defaults
   url: 'https://api.sandbox.ebay.com/wsapi'
   warning_level: High
-  savon_log_level: debug
+  savon_log_level: info
 
 test:
   <<: *development
