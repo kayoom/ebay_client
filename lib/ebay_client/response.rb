@@ -1,5 +1,5 @@
 class EbayClient::Response
-  class Exception < ::Exception
+  class Exception < ::StandardError
     cattr_accessor :code
     attr_accessor :error
 
