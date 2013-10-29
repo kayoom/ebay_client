@@ -38,5 +38,5 @@ Usage
 
 e.g. `rails console`:
 
-    EbayClient.api.get_ebay_offical_time
+    EbayClient.api.get_ebay_official_time
      => {:timestamp=>Thu, 26 Apr 2012 09:07:40 +0000, :ack=>"Success", :version=>"770", :build=>"E770_CORE_BUNDLED_14752595_R1", :@xmlns=>"urn:ebay:apis:eBLBaseComponents"} 
