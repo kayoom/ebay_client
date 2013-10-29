@@ -6,6 +6,7 @@ defaults: &defaults
   preload: false
   warning_level: Low
   error_language: en_US
+  api_keys: []
 
 development: &development
   <<: *defaults
