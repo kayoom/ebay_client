@@ -18,7 +18,7 @@ class EbayClient::Configuration
 
     @api_keys = @api_keys.map do |key_values|
       ApiKey.new key_values
-    end
+    end.shuffle
     @current_key = @api_keys.first
   end
 
