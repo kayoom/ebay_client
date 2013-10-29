@@ -21,7 +21,12 @@ class EbayClient::Api < ActiveSupport::BasicObject
     request = ::EbayClient::Request.new self, name, body
 
     @calls += 1
-    request.execute
+    begin
+      request.execute
+    rescue Response::Error.for_code('218050') => e
+      @configuration.next_key!
+      request.execute
+    end
   end
 
   def dispatch! name, body
