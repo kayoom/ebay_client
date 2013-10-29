@@ -1,45 +1,45 @@
 class EbayClient::Configuration
   class ApiKey
     attr_accessor :appid, :devid, :certid, :token
-    
+
     def initialize key_values
       key_values.each do |key, val|
         instance_variable_set "@#{key}", val
       end
     end
   end
-  
+
   attr_accessor :version, :siteid, :routing, :url, :api_keys, :warning_level, :error_language, :current_key, :savon_log_level
 
   def initialize presets
     presets.each do |key, val|
       instance_variable_set "@#{key}", val
     end
-    
-    @api_keys.map! do |key_values|
+
+    @api_keys = @api_keys.map do |key_values|
       ApiKey.new key_values
     end
     @current_key = @api_keys.first
   end
-  
+
   def next_key!
-    i = @api_keys.index(@current_key) + 1    
+    i = @api_keys.index(@current_key) + 1
     i = 0 if i >= @api_keys.count
     @current_key = @api_keys[i]
   end
-  
+
   def appid
     @current_key.appid
   end
-  
+
   def devid
     @current_key.devid
   end
-  
+
   def certid
     @current_key.certid
   end
-  
+
   def token
     @current_key.token
   end
