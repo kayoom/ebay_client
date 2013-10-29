@@ -1,16 +1,19 @@
----
 defaults: &defaults
-  version: 767
+  version: 809
+  # use local file as default
+  #wsdl_file: 'http://developer.ebay.com/webservices/809/eBaySvc.wsdl'
   routing: default
   siteid: 0
   preload: false
   warning_level: Low
   error_language: en_US
+  savon_log_level: debug
 
 development: &development
   <<: *defaults
   url: 'https://api.sandbox.ebay.com/wsapi'
   warning_level: High
+  savon_log_level: info
 
 test:
   <<: *development

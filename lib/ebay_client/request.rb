@@ -6,7 +6,7 @@ class EbayClient::Request
   end
 
   def normalized_name
-    @normalized_name ||= @name.to_s.camelcase.gsub /ebay/i, 'eBay'
+    @normalized_name ||= @name.to_s.camelcase.gsub(/ebay/i, 'eBay')
   end
 
   def normalized_body
@@ -27,7 +27,7 @@ class EbayClient::Request
   end
 
   def execute_request
-    @api.client.request(@api.namespace, normalized_name) do |soap|
+    @api.client.request(@api.namespace, normalized_name + 'Request') do |soap|
       soap.endpoint = @api.endpoint.url_for normalized_name
       soap.header = @api.header.to_hash
       soap.body = normalized_body
