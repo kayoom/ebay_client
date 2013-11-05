@@ -15,21 +15,19 @@ Installation
 `config/ebay_client.yml`:
 
     development: &sandbox
-      api_keys:
-      - token: '<YOUR SANDBOX AUTHENTICATION TOKEN>'
-        devid: '<YOUR SANDBOX DEV ID>'
-        appid: '<YOUR SANDBOX APP ID>'
-        certid: '<YOUR SANDBOX CERT ID>'
+      token: '<YOUR SANDBOX AUTHENTICATION TOKEN>'
+      devid: '<YOUR SANDBOX DEV ID>'
+      appid: '<YOUR SANDBOX APP ID>'
+      certid: '<YOUR SANDBOX CERT ID>'
 
     test:
       <<: *sandbox
 
-    production:  
-      api_keys:
-        - token: '<YOUR LIVE AUTHENTICATION TOKEN>'
-          devid: '<YOUR LIVE DEV ID>'
-          appid: '<YOUR LIVE APP ID>'
-          certid: '<YOUR LIVE CERT ID>'
+    production:
+      token: '<YOUR LIVE AUTHENTICATION TOKEN>'
+      devid: '<YOUR LIVE DEV ID>'
+      appid: '<YOUR LIVE APP ID>'
+      certid: '<YOUR LIVE CERT ID>'
 
 Fire up your console!
 
