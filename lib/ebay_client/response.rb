@@ -64,12 +64,13 @@ class EbayClient::Response
   attr_reader :timestamp, :ack, :build, :version, :errors, :payload, :correlation_id
 
   def initialize values
-    @timestamp = values.delete :timestamp
     @ack = values.delete :ack
     @build = values.delete :build
     @version = values.delete :version
     @errors = get_errors values.delete(:errors) || []
     @correlation_id = values.delete :correlation_id
+    values.delete :'@xmlns'
+    @timestamp = values[:timestamp]
     @payload = values
   end
 
