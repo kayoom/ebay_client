@@ -13,9 +13,6 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/kayoom/ebay_client"
   s.description = "Simple, lightweight eBay Trading API Client"
   s.license     = "MIT"
-  s.metadata    = {
-    'issue_tracker' => 'https://github.com/kayoom/ebay_client/issues'
-  }
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
