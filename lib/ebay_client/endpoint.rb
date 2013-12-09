@@ -10,13 +10,13 @@ class EbayClient::Endpoint
   end
 
   def url_base
-    @url_base ||= [
+    [
       configuration.url,
       params_base
     ].join
   end
 
   def params_base
-    @params_base ||= "?appid=#{configuration.appid}&siteid=#{configuration.siteid}&version=#{configuration.version}&routing=#{configuration.routing}&callname="
+    "?appid=#{configuration.appid}&siteid=#{configuration.siteid}&version=#{configuration.version}&routing=#{configuration.routing}&callname="
   end
 end
