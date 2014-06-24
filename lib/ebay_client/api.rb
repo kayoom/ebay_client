@@ -2,7 +2,7 @@ require 'savon'
 require 'gyoku'
 require 'ebay_client/response'
 
-class EbayClient::Api < ActiveSupport::BasicObject
+class EbayClient::Api < ActiveSupport::ProxyObject
   attr_reader :configuration, :endpoint, :namespace, :header, :client, :calls
 
   def initialize configuration
