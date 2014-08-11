@@ -60,7 +60,7 @@ class EbayClient::Api < ActiveSupport::ProxyObject
 
   def method_missing name, *args, &block
     if name.to_s[-1,1] == '!'
-      dispatch! name, args.first
+      dispatch! name[0..-2], args.first
     else
       dispatch name, args.first
     end
