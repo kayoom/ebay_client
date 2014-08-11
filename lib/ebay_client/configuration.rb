@@ -9,7 +9,7 @@ class EbayClient::Configuration
     end
   end
 
-  attr_accessor :version, :siteid, :routing, :url, :api_keys, :warning_level, :error_language, :current_key, :savon_log_level
+  attr_accessor :version, :siteid, :routing, :url, :api_keys, :warning_level, :error_language, :current_key, :savon_log_level, :http_read_timeout
 
   def initialize presets
     presets.each do |key, val|

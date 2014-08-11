@@ -9,6 +9,7 @@ defaults: &defaults
   error_language: en_US
   api_keys: []
   savon_log_level: debug
+  http_read_timeout: 600
 
 development: &development
   <<: *defaults
