@@ -11,7 +11,7 @@ class EbayClient::Api < ActiveSupport::ProxyObject
     @namespace = :urn
     @header = ::EbayClient::Header.new configuration, namespace
     @client = ::Savon::Client.new({:wsdl => configuration.wsdl_file})
-    @client.http.read_timeout = configuration.http_read_timeout
+    ::Savon.client(read_timeout: configuration.http_read_timeout)
     @calls = 0
 
     ::Gyoku.convert_symbols_to :camelcase
