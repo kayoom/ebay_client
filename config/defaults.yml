@@ -8,14 +8,14 @@ defaults: &defaults
   warning_level: Low
   error_language: en_US
   api_keys: []
-  savon_log_level: debug
+  savon_log_level: :debug
   http_read_timeout: 600
 
 development: &development
   <<: *defaults
   url: 'https://api.sandbox.ebay.com/wsapi'
   warning_level: High
-  savon_log_level: info
+  savon_log_level: :info
 
 test:
   <<: *development

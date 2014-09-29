@@ -10,11 +10,17 @@ class EbayClient::Api < ActiveSupport::ProxyObject
     @endpoint = ::EbayClient::Endpoint.new configuration
     @namespace = :urn
     @header = ::EbayClient::Header.new configuration, namespace
-    @client = ::Savon::Client.new({:wsdl => configuration.wsdl_file})
-    ::Savon.client(read_timeout: configuration.http_read_timeout)
+    @client = ::Savon.client(
+      :wsdl => configuration.wsdl_file,
+      :read_timeout => configuration.http_read_timeout,
+      :namespaces => {'xmlns:urn' => 'urn:ebay:apis:eBLBaseComponents' },
+      :convert_request_keys_to => :camelcase,
+      :log => true,
+      :logger => ::Rails.logger,
+      :log_level => configuration.savon_log_level,
+    )
     @calls = 0
 
-    ::Gyoku.convert_symbols_to :camelcase
     create_methods if configuration.preload?
   end
 
