@@ -1,7 +1,7 @@
 defaults: &defaults
-  version: 881
+  version: 893
   # use local file as default
-  #wsdl_file: 'http://developer.ebay.com/webservices/809/eBaySvc.wsdl'
+  #wsdl_file: 'http://developer.ebay.com/webservices/893/eBaySvc.wsdl'
   routing: default
   siteid: 0
   preload: false
