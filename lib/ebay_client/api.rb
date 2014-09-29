@@ -10,7 +10,7 @@ class EbayClient::Api < ActiveSupport::ProxyObject
     @endpoint = ::EbayClient::Endpoint.new configuration
     @namespace = :urn
     @header = ::EbayClient::Header.new configuration, namespace
-    @client = ::Savon::Client.new configuration.wsdl_file
+    @client = ::Savon::Client.new({:wsdl => configuration.wsdl_file})
     @client.http.read_timeout = configuration.http_read_timeout
     @calls = 0
 
