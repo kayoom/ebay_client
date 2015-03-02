@@ -49,7 +49,7 @@ class EbayClient::Api < ActiveSupport::ProxyObject
   def create_methods
     api_methods = ::Module.new
 
-    client.wsdl.soap_actions.each do |action|
+    client.operations.each do |action|
       name = action.to_s.gsub(/e_bay_/, '_ebay_')
 
       api_methods.send :define_method, name do |*args|
