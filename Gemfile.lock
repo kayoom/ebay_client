@@ -8,7 +8,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.2.5)
+    activesupport (4.2.5.1)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -24,10 +24,10 @@ GEM
       rack
     i18n (0.7.0)
     json (1.8.3)
-    mini_portile (0.6.2)
-    minitest (5.8.3)
-    nokogiri (1.6.6.4)
-      mini_portile (~> 0.6.0)
+    mini_portile2 (2.0.0)
+    minitest (5.8.4)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     nori (2.6.0)
     rack (1.6.4)
     savon (2.11.1)
