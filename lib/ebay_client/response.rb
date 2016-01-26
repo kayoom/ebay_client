@@ -10,7 +10,7 @@ class EbayClient::Response
     alias_method :message, :to_s
   end
 
-  class Error
+  class Error < Exception
     attr_reader :classification, :code, :parameters, :long_message, :short_message, :severity_code
 
     def initialize values

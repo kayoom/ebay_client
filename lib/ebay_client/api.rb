@@ -16,7 +16,7 @@ class EbayClient::Api < ActiveSupport::ProxyObject
       :namespaces => {'xmlns:urn' => 'urn:ebay:apis:eBLBaseComponents' },
       :convert_request_keys_to => :camelcase,
       :log => true,
-      :logger => ::Rails.logger,
+      :logger => (defined?(Rails) && Rails.respond_to?(:logger) ? Rails.logger : ::Logger.new(::STDOUT)),
       :log_level => configuration.savon_log_level,
     )
     @calls = 0
