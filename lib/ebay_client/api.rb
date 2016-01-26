@@ -24,20 +24,23 @@ class EbayClient::Api < ActiveSupport::ProxyObject
     create_methods if configuration.preload?
   end
 
-  def dispatch name, body
+  def dispatch name, body, fail_on_error = false
     request = ::EbayClient::Request.new self, name, body
 
     @calls += 1
     begin
       request.execute
-    rescue ::EbayClient::Response::Error.for_code('218050') => e
-      @configuration.next_key!
-      request.execute
+    rescue ::EbayClient::Response::Exception => e
+      if e.code == '218050'
+        @configuration.next_key!
+        request.execute
+      end
+      raise e
     end
   end
 
   def dispatch! name, body
-    dispatch(name, body).payload!
+    dispatch(name, body, true).payload!
   end
 
   def inspect

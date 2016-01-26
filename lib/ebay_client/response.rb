@@ -1,16 +1,16 @@
 class EbayClient::Response
   class Exception < ::StandardError
-    cattr_accessor :code
+    attr_accessor :code
     attr_accessor :error
 
-    def to_s
-      error.to_s
-    end
-    alias_method :inspect, :to_s
-    alias_method :message, :to_s
+    #def to_s
+    #  error.to_s
+    #end
+    #alias_method :inspect, :to_s
+    #alias_method :message, :to_s
   end
 
-  class Error < Exception
+  class Error
     attr_reader :classification, :code, :parameters, :long_message, :short_message, :severity_code
 
     def initialize values
@@ -48,15 +48,13 @@ class EbayClient::Response
       attr_accessor :errors
 
       def for_code code
-        code = code.to_s
-
         self.errors ||= Hash.new do |h, k|
-          h[k] = Class.new(EbayClient::Response::Exception).tap do |exception|
+          h[k] = ::EbayClient::Response::Exception.new.tap do |exception|
             exception.code = k
           end
         end
 
-        errors[code]
+        errors[code.to_s]
       end
     end
   end
@@ -92,7 +90,7 @@ class EbayClient::Response
 
   protected
   def exception
-    @exception ||= errors.first && EbayClient::Response::Error.for_code(errors.first.code).new.tap { |e| e.error = errors.first }
+    @exception ||= errors.first && EbayClient::Response::Error.for_code(errors.first.code).tap { |e| e.error = errors.first }
   end
 
   def raise_failure
@@ -103,7 +101,7 @@ class EbayClient::Response
     values = [values] if values.is_a? Hash
 
     values.map do |vals|
-      Error.new vals
+      Error.new(vals)
     end
   end
 end
