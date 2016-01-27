@@ -1,0 +1,8 @@
+test:
+  api_keys:
+    - token: 'token'
+      devid: 'devid'
+      appid: 'appid'
+      certid: 'certid'
+  preload: false
+  savon_log_level: :warn
