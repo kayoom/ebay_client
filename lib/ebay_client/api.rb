@@ -5,18 +5,19 @@ require 'ebay_client/response'
 class EbayClient::Api < ActiveSupport::ProxyObject
   attr_reader :configuration, :endpoint, :namespace, :header, :client, :calls
 
-  def initialize configuration
+  def initialize(configuration)
     @configuration = configuration
     @endpoint = ::EbayClient::Endpoint.new configuration
     @namespace = :urn
     @header = ::EbayClient::Header.new configuration, namespace
+    @logger = (defined?(Rails) && Rails.respond_to?(:logger) ? Rails.logger : ::Logger.new(::STDOUT))
     @client = ::Savon.client(
       :wsdl => configuration.wsdl_file,
       :read_timeout => configuration.http_read_timeout,
-      :namespaces => {'xmlns:urn' => 'urn:ebay:apis:eBLBaseComponents' },
+      :namespaces => {'xmlns:urn' => 'urn:ebay:apis:eBLBaseComponents'},
       :convert_request_keys_to => :camelcase,
       :log => true,
-      :logger => (defined?(Rails) && Rails.respond_to?(:logger) ? Rails.logger : ::Logger.new(::STDOUT)),
+      :logger => @logger,
       :log_level => configuration.savon_log_level,
     )
     @calls = 0
@@ -24,23 +25,28 @@ class EbayClient::Api < ActiveSupport::ProxyObject
     create_methods if configuration.preload?
   end
 
-  def dispatch name, body, fail_on_error = false
+  def dispatch(name, body, fail_on_error = false)
     request = ::EbayClient::Request.new self, name, body
+    response = nil
 
     @calls += 1
     begin
-      request.execute
+      response = request.execute
+      response.raise_failure if fail_on_error && response.failure?
     rescue ::EbayClient::Response::Exception => e
       if e.code == '218050'
         @configuration.next_key!
-        request.execute
+        response = request.execute
+      else
+        @logger.error e.to_s unless @logger.nil? || !@logger.respond_to?(:error)
+        raise e
       end
-      raise e
     end
+    response
   end
 
-  def dispatch! name, body
-    dispatch(name, body, true).payload!
+  def dispatch!(name, body)
+    dispatch(name, body, true).payload
   end
 
   def inspect
@@ -67,8 +73,8 @@ class EbayClient::Api < ActiveSupport::ProxyObject
     api_methods.send :extend_object, self
   end
 
-  def method_missing name, *args, &block
-    if name.to_s[-1,1] == '!'
+  def method_missing(name, *args, &block)
+    if name.to_s[-1, 1] == '!'
       dispatch! name[0..-2], args.first
     else
       dispatch name, args.first

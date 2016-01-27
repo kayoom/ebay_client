@@ -1,7 +1,7 @@
 class EbayClient::Header
   attr_reader :configuration, :namespace
 
-  def initialize configuration, namespace
+  def initialize(configuration, namespace)
     @configuration = configuration
     @namespace = namespace
   end
@@ -20,7 +20,7 @@ class EbayClient::Header
   end
 
   protected
-  def ns_key key
+  def ns_key(key)
     "#{namespace}:#{key}"
   end
 end

@@ -1,5 +1,5 @@
 class EbayClient::Request
-  def initialize api, name, body
+  def initialize(api, name, body)
     @api = api
     @name = name
     @body = body || {}
@@ -35,7 +35,7 @@ class EbayClient::Request
     @api.client.call(name_symbol, soap_header:  @api.header.to_hash, message: normalized_body)
   end
 
-  def read_response response_body
+  def read_response(response_body)
     EbayClient::Response.new response_body.values.first
   end
 end
