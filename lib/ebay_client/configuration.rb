@@ -2,16 +2,16 @@ class EbayClient::Configuration
   class ApiKey
     attr_accessor :appid, :devid, :certid, :token
 
-    def initialize key_values
+    def initialize(key_values)
       key_values.each do |key, val|
         instance_variable_set "@#{key}", val
       end
     end
   end
 
-  attr_accessor :version, :siteid, :routing, :url, :api_keys, :warning_level, :error_language, :current_key, :savon_log_level
+  attr_accessor :version, :siteid, :routing, :url, :api_keys, :warning_level, :error_language, :current_key, :savon_log_level, :http_read_timeout
 
-  def initialize presets
+  def initialize(presets)
     presets.each do |key, val|
       instance_variable_set "@#{key}", val
     end
@@ -53,7 +53,7 @@ class EbayClient::Configuration
   end
 
   class << self
-    def load file
+    def load(file)
       defaults = load_defaults
       configs = YAML.load_file file
 

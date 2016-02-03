@@ -1,6 +1,6 @@
 class EbayClient::Response
   class Exception < ::StandardError
-    cattr_accessor :code
+    attr_accessor :code
     attr_accessor :error
 
     def to_s
@@ -13,7 +13,7 @@ class EbayClient::Response
   class Error
     attr_reader :classification, :code, :parameters, :long_message, :short_message, :severity_code
 
-    def initialize values
+    def initialize(values)
       @classification = values[:error_classification]
       @code = values[:error_code]
       @parameters = get_parameters values[:error_parameters] || []
@@ -31,12 +31,12 @@ class EbayClient::Response
     end
 
     protected
-    def get_parameters values
+    def get_parameters(values)
       values = [values] if values.is_a? Hash
 
       {}.tap do |hash|
         values.each do |vals|
-          key = vals[:attributes!][:param_id] rescue next
+          key = vals[:@param_id] rescue next
           val = vals[:value] or next
 
           hash[key] = val
@@ -47,23 +47,21 @@ class EbayClient::Response
     class << self
       attr_accessor :errors
 
-      def for_code code
-        code = code.to_s
-
+      def for_code(code)
         self.errors ||= Hash.new do |h, k|
-          h[k] = Class.new(EbayClient::Response::Exception).tap do |exception|
+          h[k] = ::EbayClient::Response::Exception.new.tap do |exception|
             exception.code = k
           end
         end
 
-        errors[code]
+        errors[code.to_s]
       end
     end
   end
 
   attr_reader :timestamp, :ack, :build, :version, :errors, :payload, :correlation_id
 
-  def initialize values
+  def initialize(values)
     @ack = values.delete :ack
     @build = values.delete :build
     @version = values.delete :version
@@ -86,24 +84,20 @@ class EbayClient::Response
     ack == 'Warning'
   end
 
-  def payload!
-    !failure? && payload || raise_failure
-  end
-
-  protected
-  def exception
-    @exception ||= errors.first && EbayClient::Response::Error.for_code(errors.first.code).new.tap { |e| e.error = errors.first }
-  end
-
   def raise_failure
     raise exception
   end
 
-  def get_errors values
+  protected
+  def exception
+    @exception ||= errors.first && EbayClient::Response::Error.for_code(errors.first.code).tap { |e| e.error = errors.first }
+  end
+
+  def get_errors(values)
     values = [values] if values.is_a? Hash
 
     values.map do |vals|
-      Error.new vals
+      Error.new(vals)
     end
   end
 end

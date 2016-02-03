@@ -1,11 +1,11 @@
 class EbayClient::Endpoint
   attr_reader :configuration
 
-  def initialize configuration
+  def initialize(configuration)
     @configuration = configuration
   end
 
-  def url_for action
+  def url_for(action)
     url_base + action.to_s
   end
 
