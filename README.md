@@ -10,7 +10,7 @@ Installation
 
 `Gemfile`:
 
-    gem 'ebay_client', '~> 0.1.0'
+    gem 'ebay_client', '~> 0.2.0'
 
 `config/ebay_client.yml`:
 
