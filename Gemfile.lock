@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     ebay_client (0.2.0.981)
-      activesupport (~> 4.2.0)
-      savon (>= 2.0.0)
+      activesupport (>= 3.1.0, < 5.0.0)
+      savon (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -32,7 +32,7 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
@@ -82,11 +82,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler
+  bundler (~> 1.0)
   ebay_client!
-  rspec
-  simplecov
-  webmock
+  rspec (~> 3.0)
+  simplecov (~> 0.0)
+  webmock (~> 2.0)
 
 BUNDLED WITH
    1.12.5

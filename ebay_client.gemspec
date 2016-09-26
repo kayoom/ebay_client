@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.add_dependency 'activesupport', '~> 4.2.0'
-  s.add_dependency 'savon', '>= 2.0.0'
+  s.add_dependency 'activesupport', '>= 3.1.0' , '< 5.0.0'
+  s.add_dependency 'savon', '~> 2.0'
 
-  s.add_development_dependency 'bundler'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'webmock'
-  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'bundler', '~> 1.0'
+  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'webmock', '~> 2.0'
+  s.add_development_dependency 'simplecov', '~> 0.0'
 end
