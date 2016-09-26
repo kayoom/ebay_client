@@ -70,19 +70,19 @@ describe EbayClient::Api do
 
   def success_response
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
-    '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Timestamp>2009-10-11T12:13:14.000Z</Timestamp><Ack>Success</Ack>' +
-    '<Version>949</Version><Build>E949_CORE_API_17785418_R1</Build></GeteBayOfficialTimeResponse></soapenv:Body></soapenv:Envelope>'
+      '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Timestamp>2009-10-11T12:13:14.000Z</Timestamp><Ack>Success</Ack>' +
+      "<Version>#{@api.configuration.version}</Version><Build>E#{@api.configuration.version}_CORE_API_17785418_R1</Build></GeteBayOfficialTimeResponse></soapenv:Body></soapenv:Envelope>"
   end
   def failure_response
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
-        '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Ack>Failure</Ack><Errors><ShortMessage>Internal error to the application.</ShortMessage>' +
-        '<LongMessage>Internal error to the application.</LongMessage><ErrorCode>10007</ErrorCode><SeverityCode>Error</SeverityCode><ErrorParameters ParamID="0"><Value>12345678</Value>' +
-        '</ErrorParameters></Errors><Version>949</Version><Build>E949_CORE_API_17785418_R1</Build></GeteBayOfficialTimeResponse></soapenv:Body></soapenv:Envelope>'
+      '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Ack>Failure</Ack><Errors><ShortMessage>Internal error to the application.</ShortMessage>' +
+      '<LongMessage>Internal error to the application.</LongMessage><ErrorCode>10007</ErrorCode><SeverityCode>Error</SeverityCode><ErrorParameters ParamID="0"><Value>12345678</Value></ErrorParameters></Errors>' +
+      "<Version>#{@api.configuration.version}</Version><Build>E#{@api.configuration.version}_CORE_API_17785418_R1</Build></GeteBayOfficialTimeResponse></soapenv:Body></soapenv:Envelope>"
   end
   def recoverable_failure_response
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
-        '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Ack>Failure</Ack><Errors><ShortMessage>User limit exceeded.</ShortMessage>' +
-        '<LongMessage>Users of this application are limited to a number of calls they can make on a daily, hourly and 6-minute basis. You have gone over the daily limit. Please try again after 24 hours.</LongMessage><ErrorCode>218050</ErrorCode><SeverityCode>Error</SeverityCode></Errors><Version>949</Version>' +
-        '<Build>E949_CORE_API_17785418_R1</Build></GeteBayOfficialTimeResponse></soapenv:Body></soapenv:Envelope>'
+      '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Ack>Failure</Ack><Errors><ShortMessage>User limit exceeded.</ShortMessage>' +
+      '<LongMessage>Users of this application are limited to a number of calls they can make on a daily, hourly and 6-minute basis. You have gone over the daily limit. Please try again after 24 hours.</LongMessage><ErrorCode>218050</ErrorCode><SeverityCode>Error</SeverityCode></Errors>' +
+      "<Version>#{@api.configuration.version}</Version><Build>E#{@api.configuration.version}_CORE_API_17785418_R1</Build></GeteBayOfficialTimeResponse></soapenv:Body></soapenv:Envelope>"
   end
 end
