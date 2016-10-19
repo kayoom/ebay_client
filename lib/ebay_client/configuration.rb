@@ -44,6 +44,10 @@ class EbayClient::Configuration
     @current_key.token
   end
 
+  def token=(user_token)
+    @current_key.token = user_token
+  end
+
   def wsdl_file
     @wsdl_file ||= File.expand_path "../../../vendor/ebay/#{version}.wsdl", __FILE__
   end
