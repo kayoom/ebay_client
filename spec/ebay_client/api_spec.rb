@@ -68,6 +68,22 @@ describe EbayClient::Api do
     end
   end
 
+  context 'with erb' do
+    before(:each) do
+      configuration = EbayClient::Configuration.load(File.expand_path('../../config/with_erb.yml', __FILE__))
+      configuration = configuration['test']
+      @api = EbayClient::Api.new configuration
+      @url = "https://api.sandbox.ebay.com/wsapi?appid=#{configuration.appid}&callname=GeteBayOfficialTime&routing=#{configuration.routing}&siteid=#{configuration.siteid}&version=#{configuration.version}"
+    end
+
+    it 'should load the erb-based configuration values' do
+      expect(@api.configuration.api_keys.first.token).to eq('token')
+      expect(@api.configuration.api_keys.first.devid).to eq('devid')
+      expect(@api.configuration.api_keys.first.appid).to eq('appid')
+      expect(@api.configuration.api_keys.first.certid).to eq('certid')
+    end
+  end
+
   def success_response
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
       '<soapenv:Body><GeteBayOfficialTimeResponse xmlns="urn:ebay:apis:eBLBaseComponents"><Timestamp>2009-10-11T12:13:14.000Z</Timestamp><Ack>Success</Ack>' +

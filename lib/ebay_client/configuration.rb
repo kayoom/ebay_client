@@ -55,7 +55,7 @@ class EbayClient::Configuration
   class << self
     def load(file)
       defaults = load_defaults
-      configs = YAML.load_file file
+      configs = YAML.load(ERB.new(File.read(file)).result)
 
       configs.each_pair do |env, presets|
         env_defaults = defaults[env] || {}
