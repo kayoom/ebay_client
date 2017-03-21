@@ -10,7 +10,7 @@ Installation
 
 `Gemfile`:
 
-    gem 'ebay_client', '~> 0.2.0'
+    gem 'ebay_client', '~> 0.3.0'
 
 `config/ebay_client.yml`:
 
@@ -46,7 +46,7 @@ e.g. `rails console`:
 Notes
 -----
 * An overview of possible API calls can be found at the
-  [eBay Trading API docs](http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/)
+  [eBay Trading API docs](https://developer.ebay.com/devzone/xml/docs/Reference/eBay/index.html)
 * Names (Methods, Types, Members) are mapped from `CamelCase` \<=\> `snake_case`
 * `eBay` is mapped to `ebay`, i.e. `GeteBayOfficialTime` \<=\>
   `get_ebay_official_time`
@@ -60,4 +60,6 @@ Notes
   `ebay_client.yml`. On initialization, the EbayClient will randomly
   choose one of them. If you run out of API calls, it will automatically
   switch to another key.
+* You can set your secrets as ENV variables as the `ebay_client.yml` will be parsed 
+  by the ERB interpreter. 
 * Pull requests and bug reports are welcome!
