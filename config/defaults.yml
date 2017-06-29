@@ -20,6 +20,9 @@ development: &development
 test:
   <<: *development
 
+staging:
+  <<: *development
+
 production:
   <<: *defaults
   url: 'https://api.ebay.com/wsapi'
